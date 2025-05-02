@@ -1,5 +1,19 @@
+#div_table_game {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
 #table_game {
-    border: 4px;
-    border-color: black;
     background-color: pink;
+    border-collapse: collapse;
+}
+
+td {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    border: 5px solid black;
 }

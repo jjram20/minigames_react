@@ -13,7 +13,7 @@ function FormGameRows(props) {
 
     const start_game = (e) => {
         setGameStarted(true);
-        setRowsGame(rows);
+        setRowsGame(Array.from({ length: rows }, () => Array(rows).fill('')));
         setMinWinningGame(rows);
         alert(`Table created or updated. The number of rows is ${rows}`);
     }
@@ -25,7 +25,7 @@ function FormGameRows(props) {
             <label id="label_length_row_win">Select length row for winning</label>
             <input id="length_row_winning" type="number" min="3" max="6" value={minWinning} onChange={(e) => setMinWinning(e.target.value)} />
             <button id="button_start_game" onClick={start_game}>Start game</button>
-            {gameStarted && <TableGame sizeTable={rowsGame} />}
+            { gameStarted && <TableGame sizeTable={rows} updateGame={setRowsGame} structureGame={rowsGame} />}
         </div>
     );
 };
