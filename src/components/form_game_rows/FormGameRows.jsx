@@ -18,7 +18,9 @@ function FormGameRows(props) {
             alert(`Length row for winning should be less than number rows`);
         } else {
             setGameStarted(true);
-            setRowsGame(Array.from({ length: rows }, () => Array(rows).fill('')));
+            console.log(`Rows: ${rows}. Table created: ${rowsGame}`)
+            setRowsGame(Array.from({ length: rows }, () => Array.from({ length: rows }).fill('')));
+            console.log(`Rows: ${rows}. Table created: ${rowsGame}`);
             setMinWinningGame(rows);
             alert(`Table created or updated. The number of rows is ${rows}`);
         }

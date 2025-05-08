@@ -8,7 +8,7 @@ function TableGame (props) {
         for (let i = 0; i < size; i++) {
             let row = [];
             for (let j = 0; j < size; j++) {
-                row.push(<td className="cell_table_game" onClick={ () => !winner && newTurn(i, j) } key={`${i}-${j}`}>{ props.structureGame[i][j] }</td>)
+                row.push(<td className="cell_table_game" onClick={ () => { console.log(`Winner: ${winner}`); !winner && newTurn(i, j)  }} key={`${i}-${j}`}>{ props.structureGame[i][j] }</td>)
             }
             table.push(<tr key={`row-${i}`}>{row}</tr>)
         }
@@ -19,7 +19,11 @@ function TableGame (props) {
     const [winner, setWinner] = useState(false);
 
     const newTurn = (posx, posy) => {
+        console.log("Applying new turn");
+        console.log(`Actual value cell: ${props.structureGame[posx][posy]}`);
+        console.log(props.structureGame);
         if (props.structureGame[posx][posy] === '' ) {
+            console.log("Getting mark");
             let mark = '';
             if (turn % 2 === 1) {
                 mark = 'O';
@@ -30,17 +34,16 @@ function TableGame (props) {
             newGameStructure[posx][posy] = mark;
             props.updateGame(newGameStructure);
             setTurn(turn + 1);
+            console.log("New turn applied");
+        } else {
+            console.log("Was not possible to apply turn");
         }
     }
 
     const verifyWinner = (rows, minWinner, structureGame) => {
         // Verify horizontally
-        console.log("Horizontal");
-        console.log(rows);
-        console.log(minWinner);
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j <= (rows - minWinner); j++) {
-                console.log(`${i}-${j}`)
                 let value = structureGame[i][j];
                 if (value === "X" || value === "O") {
                     let result = true;
@@ -61,14 +64,9 @@ function TableGame (props) {
         console.log("Vertical");
         for (let i = 0; i <= (rows - minWinner); i++) {
             for (let j = 0; j < rows; j++) {
-                console.log("Location");
-                console.log(i);
-                console.log(j);
-                console.log(`${i}-${j}`)
                 let value = structureGame[i][j];
                 if (value === "X" || value === "O") {
                     let result = true;
-                    console.log("Value obtained");
                     for (let k = (i+1); k < (i + minWinner);  k++) {
                         console.log(k);
                         if (value !== structureGame[k][j]) {
@@ -88,7 +86,6 @@ function TableGame (props) {
         console.log("Diagonal");
         for (let i = 0;  i <= (rows - minWinner);  i++) {
             for (let j = 0; j <= (rows - minWinner); j++) {
-                console.log(`${i}-${j}`)
                 let value = structureGame[i][j];
                 if (value === "X" || value === "O") {
                     let result = true;
@@ -111,6 +108,7 @@ function TableGame (props) {
     useEffect(() => {
         console.log("Game updated");
         setWinner(verifyWinner(props.sizeTable, props.minWinning, props.structureGame));
+        console.log(props.structureGame);
         console.log("Winner");
         console.log(winner);
     }, [props.structureGame]);
